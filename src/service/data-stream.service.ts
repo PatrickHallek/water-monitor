@@ -2,7 +2,7 @@ import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { ISensor } from "../app/models/monitor.model";
+import { ISensor } from "../models/monitor.model";
 
 @Injectable({ providedIn: "root" })
 export class RestService {

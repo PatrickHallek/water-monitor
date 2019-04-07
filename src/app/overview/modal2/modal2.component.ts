@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ModalController } from "@ionic/angular";
-import { ISensor } from "src/app/models/monitor.model";
+import { ISensor } from "src/models/monitor.model";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({

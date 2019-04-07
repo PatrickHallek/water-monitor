@@ -4,7 +4,7 @@ import { RestService } from "src/service/data-stream.service";
 import { Subscription } from "rxjs";
 import { Modal2Component } from "./modal2/modal2.component";
 import { ModalController } from "@ionic/angular";
-import { ISensor } from "../models/monitor.model";
+import { ISensor } from "../../models/monitor.model";
 
 @Component({
   selector: "app-tab2",
