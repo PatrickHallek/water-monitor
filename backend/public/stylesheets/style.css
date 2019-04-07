@@ -1,0 +1,41 @@
+@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: rgb(172, 235, 137) !important;
+  font-family: Raleway;
+}
+
+a {
+  color: #00b7ff;
+}
+
+.container-fluid {
+  max-width: 980px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  margin: 10px;
+  box-shadow: 2px 2px 20px 0px rgba(0, 0, 0, 0.507);
+}
+.card-body {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+form {
+}
+.tints {
+  width: 110px;
+  margin-left: auto;
+  overflow: hidden;
+}
+.fa-tint {
+  font-size: 24px;
+  margin-top: 3px;
+  color: rgb(42, 106, 234);
+  padding: 2px;
+}

@@ -1,0 +1,144 @@
+.image {
+    width: 80px;
+    height: 80px;
+    box-shadow: 0 0 0 rgba(255, 23, 68, 0.5);
+    animation: pulse 3s infinite;
+    border: solid 2px var(--accent);
+    z-index: 1;
+    margin-left: 15px;
+}
+
+.item {
+    padding: 20px;
+    padding-bottom: 0px;
+    contain: none;
+    overflow: visible;
+}
+
+ion-virtual-scroll {
+    contain: none;
+    overflow: visible;
+}
+
+.item:last-child {
+    padding-bottom: 20px;
+}
+
+.sensor-name {
+    font-size: 18px;
+    font-weight: 500;
+    top: 13px;
+    left: 91px;
+    position: absolute;
+}
+
+
+.icon-field {
+    position: absolute;
+    background: rgb(102, 102, 102);
+    box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.562);
+    border-radius: 10px;
+    width: auto;
+    padding-left: 3px;
+    padding-right: 5px;
+    top: 65px;
+    right: 23px;
+}
+
+.icon-field ion-icon {
+    float: left;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+h5 {
+   font-size: 13px;
+}
+
+.create {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 23px;
+}
+
+.add-container {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+.add {
+    font-size: 55px;
+    color: var(--accent);
+    z-index: 1;
+}
+
+.white {
+    top: 14px;
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    background: white;
+    z-index: 0;
+}
+
+.progression-bar {
+    background: rgb(43, 43, 43);
+    height: 18px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    right: 0px;
+    margin-left: -20px;
+    box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.562);
+}
+
+.progression-bar-fill {
+    background: var(--accent);
+    width: 101%;
+    height: 18px;
+    padding-right: 0px;
+    position: absolute;
+    border-radius: 10px;
+    top: 0;
+    text-align: right;
+    font-size: 12px;
+    padding: 2px;
+    transition: all 1s ease-in-out;
+    animation: waterfill 5s;
+}
+
+@keyframes waterfill {
+    from {
+        width: 0%;
+    }
+
+    80% {
+        width: 90%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.6);
+        box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.6);
+    }
+
+    70% {
+        -moz-box-shadow: 0 0 0 12px rgba(255, 23, 68, 0);
+        box-shadow: 0 0 0 12px rgba(255, 23, 68, 0);
+    }
+
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(255, 23, 68, 0);
+        box-shadow: 0 0 0 0 rgba(255, 23, 68, 0);
+    }
+}

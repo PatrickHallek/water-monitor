@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .container(style="justify-content: left;")
+  .container-fluid
+    each item in data
+      .card(style='width: 100%;')
+        .card-body
+          h3.card-title #{item.name}
+          .tints
+            - drops = item.currentWaterLevel/20
+            - for (var i = 0; i < drops ; ++i) {
+              i.fas.fa-tint
+            - }
+          form(action='/plant/#{item._id}')
+            button.btn.btn-dark(type='submit') Details
+    canvas#line-chart-overview(width='100', height='50') 

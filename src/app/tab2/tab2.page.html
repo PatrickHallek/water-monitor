@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <h1>WaterMonitor</h1>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg">
+
+  <ion-virtual-scroll [items]="sensorData">
+    <ion-item class="item" lines="none" *virtualItem="let item; let i = index">
+      <ion-avatar class="image" large item-start>
+        <ion-img [src]="item.image"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="sensor-name" size="12">
+              {{ item.sensorName }}
+            </ion-col>
+            <ion-col size="12">
+              <div class="progression-bar">
+                <div [style.max-width]="item.waterLevel+'%'" class="progression-bar-fill">
+                  {{ item.waterLevel }}%
+                </div>
+              </div>
+            </ion-col>
+            <div *ngIf="item.room" class="icon-field">
+              <h5>
+                <ion-icon ios="ios-home" md="md-home"></ion-icon>
+                {{ item.room }}
+              </h5>
+            </div>
+          </ion-row>
+          <ion-icon (click)="presentModal(i)" class="create" ios="ios-create" md="md-create"></ion-icon>
+        </ion-grid>
+      </ion-label>
+    </ion-item>
+  </ion-virtual-scroll>
+  <div class="add-container">
+    <ion-icon (click)="presentModal()" class="add ion-text-center" ios="ios-add-circle" md="md-add-circle"></ion-icon>
+    <div class="white"></div>
+  </div>
+</ion-content>
