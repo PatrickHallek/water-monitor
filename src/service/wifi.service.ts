@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 @Injectable({ providedIn: "root" })
 export class WifiService {
   constructor(private http: HttpClient, private hotspot: Hotspot, private storage: Storage) { }
-
+  public networks;
   getAppToken() {
     return new Promise(resolve => {
       this.storage.get('appToken').then((token) => {
@@ -22,39 +22,36 @@ export class WifiService {
   scanWifi() {
     this.hotspot.scanWifi().then((networks: HotspotNetwork[]) => {
       console.log(networks);
+      this.networks = networks;
     });
   }
 
   async sendCredentials(ssid, password) {
+
     const appToken = await this.getAppToken();
     const url = "http://wifi.urremote.com/wifisave?s=" + ssid.split(' ').join('+') + "&p=" + password.split(' ').join('+') + "&blynk=" + appToken;
-    console.log(url);
+    this.hotspot
+      .connectToWifi("WaterMonitor", "password")
+      .then(() => {
+        this.http.get(url).subscribe(msg => {
+          console.log("Credentials saved");
+          setTimeout(() => {
+            this.http.get("http://wifi.urremote.com/close?");
+            console.log("Close Controller WIFI");
+          }, 5000)
+        });
 
-    // this.http.get("http://wifi.urremote.com/wifisave?s=Finger+weg+da&p=24680fJhNsdawelobxYA0987AsDfGhBFE&blynk=AppToken").subscribe(() => {
-    //   setTimeout(() => {
-    //     this.http.get("http://wifi.urremote.com/close?");
-    //   }, 5000)
-    // });
-
-    //   this.hotspot
-    //     .connectToWifi("Water Monitor", "admin")
-    //     .then(() => {
-    //       console.log("successfully logged in ESP8266");
-    //       const url = "http://wifi.urremote.com/wifisave?s=" + ssid + "&p=" + password;
-    //       this.http.get("http://wifi.urremote.com/wifisave?s=Finger+weg+da&p=24680fJhNsdawelobxYA0987AsDfGhBFE");
-
-    //       this.hotspot
-    //         .connectToWifi(ssid, password)
-    //         .then(() => {
-    //           console.log("successfull logged back into WIFI");
-    //         })
-    //         .catch(() => {
-    //           console.log("error while relogging in WIFI");
-    //         });
-    //     })
-    //     .catch(() => {
-    //       console.log("error while logging into ESP8266");
-    //     });
-    // }
+        this.hotspot
+          .connectToWifi(ssid, password)
+          .then(() => {
+            console.log("successfull logged back into WIFI");
+          })
+          .catch(() => {
+            console.log("error while relogging in WIFI");
+          });
+      })
+      .catch(() => {
+        console.log("Could not find Controller WIFI");
+      });
   }
 }

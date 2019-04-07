@@ -21,12 +21,12 @@ export class RestService {
   }
   saveInputToDatabase(sensorData) {
     this.http
-      .post("http://localhost:3000/update", sensorData)
+      .post("http://192.168.188.22:3000/update", sensorData)
       .subscribe(() => {}, err => console.error(err));
   }
   getSensorData() {
     this.http
-      .get<ISensor[]>("http://localhost:3000/" + this.user)
+      .get<ISensor[]>("http://192.168.188.22:3000/" + this.user)
       .pipe(
         map(data => {
           return data.map(sensor => {
@@ -48,7 +48,7 @@ export class RestService {
   }
   getWaterLevel() {
     this.http
-      .get<ISensor[]>("http://localhost:3000/" + this.user)
+      .get<ISensor[]>("http://192.168.188.22:3000/" + this.user)
       .pipe(
         map(data => {
           return data.map(sensor => {

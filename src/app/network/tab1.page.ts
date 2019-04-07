@@ -7,18 +7,22 @@ import { WifiService } from 'src/service/wifi.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  constructor(private wifiService: WifiService) {}
+  constructor(private wifiService: WifiService) { }
   public ssid;
   public password;
+  public wifi = [];
 
-  sendCredentials(){
+  sendCredentials() {
     this.ssid = "Finger weg da";
     this.password = "24680fJhNsdawelobxYA0987AsDfGhBFE";
     this.wifiService.sendCredentials(this.ssid, this.password)
   }
 
-  scanWifi(){
+  async scanWifi() {
     this.wifiService.scanWifi();
+    setTimeout(() => {
+      this.wifi = this.wifiService.networks;
+    }, 500)
   }
 
 }

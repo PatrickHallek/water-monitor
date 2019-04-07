@@ -15,6 +15,11 @@
       <ion-col size="12" align-self-center>
         <ion-button (click)="sendCredentials()" color="primary">Send Credentials</ion-button>
       </ion-col>
+      <h1 style="color: white;">
+        {{ wifi[0] }}
+        {{ wifi }}
+        {{ wifi | json }}
+      </h1>
     </ion-row>
   </ion-grid>
 </ion-content>
