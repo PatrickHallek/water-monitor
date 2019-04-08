@@ -2,3 +2,17 @@
   max-height: 35vh;
   overflow: hidden;
 }
+
+ion-icon {
+  color: white;
+  padding-right: 5px;
+}
+
+ion-item {
+  padding-bottom: 5px;
+}
+
+ion-input {
+  padding-bottom: 5px;
+  border-bottom: solid 2px var(--accent);
+}

@@ -7,19 +7,46 @@
 </ion-header>
 
 <ion-content class="bg">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12" align-self-center>
-        <ion-button (click)="scanWifi()" color="primary">Scan Wifi</ion-button>
-      </ion-col>
-      <ion-col size="12" align-self-center>
-        <ion-button (click)="sendCredentials()" color="primary">Send Credentials</ion-button>
-      </ion-col>
-      <h1 style="color: white;">
-        {{ wifi[0] }}
-        {{ wifi }}
-        {{ wifi | json }}
-      </h1>
-    </ion-row>
-  </ion-grid>
+
+  <div *ngIf="!ssid">
+    <ion-button padding margin-bottom (click)="scanWifi()" color="primary">Scan Wifi</ion-button>
+    <ion-virtual-scroll margin-top [items]="wifi">
+      <ion-item (click)="getSSID(item.SSID)" padding-start padding-end class="item" lines="none"
+        *virtualItem="let item; let i = index">
+        <ion-icon class="ion-float-left" ios="ios-wifi" md="md-wifi"></ion-icon> {{ item.SSID }}
+      </ion-item>
+    </ion-virtual-scroll>
+  </div>
+
+  <div *ngIf="ssid">
+    <ion-item padding>
+      <ion-text>
+        <h1>Schalten Sie das Gerät ein.</h1>
+        <h6>
+          Tragen Sie das Passwort ein. Schalten Sie anschließend den Empfänger aus und wieder ein.
+          Warten Sie ca. 20s und drücken Sie auf "SEND CREDENTIALS".
+        </h6>
+      </ion-text>
+    </ion-item>
+
+    <ion-item padding-start padding-end>
+      <ion-label>WIFI: {{ ssid }}</ion-label>
+    </ion-item>
+
+    <form (ngSubmit)="sendCredentials()">
+      <ion-item padding-start padding-end>
+        <ion-label>Password: </ion-label>
+        <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+      </ion-item>
+      <ion-button float-right padding-top padding-bottom padding-end (click)="unsetSSID()" color="primary">Back
+      </ion-button>
+      <ion-button float-right [class.button-disabled]="!password" padding type="submit" color="primary">Send Credentials
+      </ion-button>
+    </form>
+  </div>
+  <ion-spinner name="crescent"></ion-spinner>
+
+  <div *ngIf="spinner == true">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
 </ion-content>
