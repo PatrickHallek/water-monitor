@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 @Injectable({ providedIn: "root" })
 export class WifiService {
   constructor(private http: HttpClient, private hotspot: Hotspot, private storage: Storage) { }
-  public networks;
+
   getAppToken() {
     return new Promise(resolve => {
       this.storage.get('appToken').then((token) => {
@@ -20,9 +20,10 @@ export class WifiService {
   }
 
   scanWifi() {
-    this.hotspot.scanWifi().then((networks: HotspotNetwork[]) => {
-      console.log(networks);
-      this.networks = networks;
+    return new Promise(resolve => {
+      this.hotspot.scanWifi().then((networks: HotspotNetwork[]) => {
+        resolve(networks);
+      });
     });
   }
 
