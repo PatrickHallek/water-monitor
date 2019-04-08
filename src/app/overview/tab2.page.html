@@ -9,7 +9,7 @@
 <ion-content class="bg">
 
   <ion-virtual-scroll [items]="sensorData">
-    <ion-item class="item" lines="none" *virtualItem="let item; let i = index">
+    <ion-item (click)="presentModal(i)" class="item" lines="none" *virtualItem="let item; let i = index">
       <ion-avatar class="image" large item-start>
         <ion-img [src]="item.image"></ion-img>
       </ion-avatar>

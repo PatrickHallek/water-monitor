@@ -3,15 +3,19 @@ import { HttpClient } from "@angular/common/http";
 import { Subject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ISensor } from "../models/monitor.model";
+import { WifiService } from './wifi.service';
 
 @Injectable({ providedIn: "root" })
 export class RestService {
-  constructor(private http: HttpClient) {}
+
   private sensor: ISensor[];
   private sensorUpdated = new Subject<ISensor[]>();
   private waterLevel;
   private waterLevelUpdated = new Subject<ISensor[]>();
-  private user = "Patrick";
+  private user;
+
+  constructor(private http: HttpClient, private wifiService: WifiService) {}
+
 
   getSensorDataListener() {
     return this.sensorUpdated.asObservable();
@@ -22,9 +26,10 @@ export class RestService {
   saveInputToDatabase(sensorData) {
     this.http
       .post("http://192.168.188.22:3000/update", sensorData)
-      .subscribe(() => {}, err => console.error(err));
+      .subscribe(() => { }, err => console.error(err));
   }
-  getSensorData() {
+  async getSensorData() {
+    this.user = await this.wifiService.getAppToken();
     this.http
       .get<ISensor[]>("http://192.168.188.22:3000/" + this.user)
       .pipe(
@@ -35,7 +40,8 @@ export class RestService {
               sensorName: sensor.sensorName,
               timestamp: sensor.timestamp,
               waterLevel: sensor.waterLevel,
-              room: sensor.room
+              room: sensor.room,
+              duration: sensor.duration
             };
             return sensorUpdate;
           });
@@ -63,5 +69,18 @@ export class RestService {
         this.waterLevel = waterLevel;
         this.waterLevelUpdated.next(this.waterLevel);
       });
+  }
+
+  async updateSensor(sensor) {
+    const postData = {
+      room: sensor.room,
+      duration: sensor.duration,
+      sensorName: sensor.sensorName,
+      image: sensor.image,
+      user: await this.wifiService.getAppToken()
+    };
+    this.http.post("http://192.168.188.22:3000/update", postData).subscribe(err => {
+      this.getSensorData();
+    });
   }
 }

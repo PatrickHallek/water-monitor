@@ -1,22 +1,35 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      <h1 class="ion-float-left">{{ sensor.sensorName }}</h1>
-      <ion-button class="ion-float-right" (click)="closeModal()">Close Modal</ion-button>
+      {{ sensor.sensorName }}
+      <ion-icon float-right (click)="closeModal()" ios="ios-close" md="md-close"></ion-icon>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="bg">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12" align-self-center>
-        <ion-button class="ion-float-right" (click)="closeModal()">Delete Sensor</ion-button>
-      </ion-col>
-      <ion-col size="12" align-self-center>
-        <ion-button class="ion-float-right" (click)="takePhoto()">Choose Image!</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <p><img [src]="myPhoto" alt=""></p>
+
+  <form (ngSubmit)="updateSensor()">
+
+    <ion-button padding (click)="takePhoto()">Bild ändern</ion-button>
+    <p padding><img height="300" width="100%" [src]="sensor.image" alt=""></p>
+
+    <ion-item padding-start padding-end>
+      <ion-label>Name: </ion-label>
+      <ion-input type="text" [(ngModel)]="sensor.sensorName" [value]="sensor.sensorName" name="sensorName"></ion-input>
+    </ion-item>
+    <ion-item padding-start padding-end margin-top>
+      <ion-label>Wasserbedarf: </ion-label>
+      <ion-input type="number" [(ngModel)]="sensor.duration" [value]="sensor.duration" name="duration"></ion-input>
+    </ion-item>
+    <ion-item padding-start padding-end margin-top>
+      <ion-label>Raum: </ion-label>
+      <ion-input type="text" [(ngModel)]="sensor.room" [value]="sensor.room" name="room"></ion-input>
+    </ion-item>
+
+
+    <ion-button float-right padding type="submit" color="primary">Speichern</ion-button>
+    <ion-button float-right padding (click)="closeModal()">Sensor Löschen</ion-button>
+  </form>
+
 </ion-content>

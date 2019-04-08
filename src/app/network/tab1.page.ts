@@ -26,11 +26,12 @@ export class Tab1Page implements OnInit {
       .subscribe((spinner: Boolean) => {
         this.spinner = spinner;
       });
+    this.scanWifi();
   }
 
   sendCredentials() {
     this.animationService.setSpinner(true);
-    console.log("Password: " + this.password + " SSID: " + this.ssid);
+    console.log("Passwort: " + this.password + " SSID: " + this.ssid);
     this.wifiService.sendCredentials(this.ssid, this.password)
   }
 

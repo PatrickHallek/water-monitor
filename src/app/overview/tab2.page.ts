@@ -44,7 +44,6 @@ export class Tab2Page implements OnInit {
   }
 
   async presentModal(i) {
-    console.log(this.sensorData[i]);
     const modal = await this.modalController.create({
       component: Modal2Component,
       componentProps: { sensor: this.sensorData[i] }

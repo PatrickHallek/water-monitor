@@ -9,7 +9,9 @@
 <ion-content class="bg">
 
   <div *ngIf="!ssid">
-    <ion-button padding margin-bottom (click)="scanWifi()" color="primary">Scan Wifi</ion-button>
+    <h2 padding-start padding-end>Wähle dein WLAN aus!</h2>
+
+    <ion-button padding-start padding-end margin-bottom (click)="scanWifi()" color="primary">WLAN Erneut scannen</ion-button>
     <ion-virtual-scroll margin-top [items]="wifi">
       <ion-item (click)="getSSID(item.SSID)" padding-start padding-end class="item" lines="none"
         *virtualItem="let item; let i = index">
@@ -23,10 +25,12 @@
   <div *ngIf="ssid && spinner != true">
     <ion-item padding>
       <ion-text>
-        <h1>Schalten Sie das Gerät ein.</h1>
+        <h2>Schalte den Empfänger ein.</h2>
         <h6>
-          Tragen Sie das Passwort ein. Schalten Sie anschließend den Empfänger aus und wieder ein.
-          Warten Sie ca. 20s und drücken Sie auf "SEND CREDENTIALS".
+          Trage das WLAN-Passwort ein und schalte anschließend das Empfangsgerät ein. Falls das Gerät schon an war, 
+          schalte es zunächst aus und im Anschluss wieder ein.
+          Drücke nach dem Anschalten auf "VERBINDEN". Dieser Vorgang kann bis zu mehreren Minuten dauern, schalte während des
+          Vorganges das Gerät und das Smartphone nicht aus.
         </h6>
       </ion-text>
     </ion-item>
@@ -37,12 +41,12 @@
 
     <form (ngSubmit)="sendCredentials()">
       <ion-item padding-start padding-end>
-        <ion-label>Password: </ion-label>
+        <ion-label>Name: </ion-label>
         <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
       </ion-item>
-      <ion-button float-right padding-top padding-bottom padding-end (click)="unsetSSID()" color="primary">Back
+      <ion-button float-right padding-top padding-bottom padding-end (click)="unsetSSID()" color="primary">Zurück
       </ion-button>
-      <ion-button float-right [class.button-disabled]="!password" padding type="submit" color="primary">Send Credentials
+      <ion-button float-right [class.button-disabled]="!password" padding type="submit" color="primary">Verbinden
       </ion-button>
     </form>
   </div>
@@ -52,5 +56,5 @@
       <ion-spinner color="primary" name="crescent"></ion-spinner>
     </ion-row>
   </ion-grid>
-  
+
 </ion-content>

@@ -4,4 +4,5 @@ export interface ISensor {
   timestamp: Date;
   waterLevel: String;
   room: String;
+  duration;
 }
