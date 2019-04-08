@@ -18,7 +18,9 @@
     </ion-virtual-scroll>
   </div>
 
-  <div *ngIf="ssid">
+
+
+  <div *ngIf="ssid && spinner != true">
     <ion-item padding>
       <ion-text>
         <h1>Schalten Sie das Gerät ein.</h1>
@@ -44,9 +46,10 @@
       </ion-button>
     </form>
   </div>
-  <ion-spinner name="crescent"></ion-spinner>
-
-  <div *ngIf="spinner == true">
-    <ion-spinner name="crescent"></ion-spinner>
-  </div>
+  
+  <ion-grid *ngIf="spinner == true">
+    <ion-row justify-content-center>
+      <ion-spinner color="primary" name="crescent"></ion-spinner>
+    </ion-row>
+  </ion-grid>
 </ion-content>
