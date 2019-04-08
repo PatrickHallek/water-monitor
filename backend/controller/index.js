@@ -18,18 +18,24 @@ exports.postSensor = (req, res, err) => {
     var key = data.soilMoisture.toString().slice(0, 2);
     var sensorNr = data.soilMoisture.toString().slice(2, 5);
     var soilMoisture = 100 - data.soilMoisture.toString().slice(5, 8);
+
+    var update = {};
+    if (user) update.user = user;
+    if (waterLevel) update.waterLevel = soilMoisture;
+    if (sensorNr) update.sensorNr = sensorNr;
+    update.timestamp = Date.now();
+    update.sensorNumber = "Name";
+    update.room = "Raum";
+    update.duration = 1;
+    update.image = "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1932&q=80";
+
+
     if (key == 99) {
         Sensor.findOneAndUpdate({
-                sensorNumber: sensorNr
+                sensorNumber: sensorNr,
+                user: data.user
             }, {
-                $set: {
-                    user: user,
-                    timestamp: Date.now(),
-                    waterLevel: soilMoisture,
-                    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1932&q=80",
-                    sensorName: "Name",
-                    sensorNumber: sensorNr,
-                }
+                $set: update
             }, {
                 upsert: true,
             })
@@ -47,34 +53,44 @@ exports.postSensor = (req, res, err) => {
     }
 }
 
-exports.renderPlantDetail = (req, res, err) => {
-    Valve.find({
-        _id: req.params.id
-    }).then(data => {
-        res.render('plant-detail', {
-            title: 'Express',
-            data: data
+exports.postUpdateSensor = (req, res, err) => {
+    var update = {};
+    if (req.body.image) update.image = req.body.image;
+    if (req.body.sensorName) update.sensorName = req.body.sensorName;
+    if (req.body.duration) update.duration = req.body.duration;
+    if (req.body.room) update.room = req.body.room;
+    if (!req.body.user) {
+        res.status(201).json({
+            message: "No user"
         });
-    }).catch(err => {
-        console.log(err);
-        res.redirect('/')
-    });
-};
+        return;
+    };
+    Sensor.findOneAndUpdate({
+            sensorNumber: req.body.sensorNr,
+            user: req.body.user
+        }, {
+            $set: update
+        }, {
+            upsert: false,
+        })
+        .then(data => {
+            res.status(201).json({
+                message: "Data saved to database!",
+                data: data
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
-exports.addValve = (req, res, err) => {
-    var now = dateFormat(new Date(), "dd.mm.yy, hh:MM:ss");
-    new Valve({
-        name: "Ventil 3",
-        lastOpening: now,
-        currentFlowRate: 0.7,
-        currentWaterLevel: 50,
-        irrigationData: [{}]
-    }).save().then(() => {
-        res.redirect('/')
-    }).catch(err => {
-        res.json(err)
-    });
-};
+
+
+
+
+
+
+
 
 
 
