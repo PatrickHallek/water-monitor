@@ -11,8 +11,9 @@
 
   <form (ngSubmit)="updateSensor()">
 
-    <ion-button padding (click)="takePhoto()">Bild ändern</ion-button>
-    <p padding><img height="300" width="100%" [src]="sensor.image" alt=""></p>
+    <ion-button float-left padding-start margin-bottom margin-top (click)="takePhoto(0)">Bild Aufnehmen</ion-button>
+    <ion-button float-left padding-end margin-bottom margin-top (click)="takePhoto(1)">Gallerie</ion-button>
+    <div [style.backgroundImage]="'url('+sensor.image+')'" class="image"></div>
 
     <ion-item padding-start padding-end>
       <ion-label>Name: </ion-label>
@@ -28,8 +29,8 @@
     </ion-item>
 
 
-    <ion-button float-right padding type="submit" color="primary">Speichern</ion-button>
-    <ion-button float-right padding (click)="closeModal()">Sensor Löschen</ion-button>
+    <ion-button float-right padding-end margin-top type="submit" color="primary">Speichern</ion-button>
+    <ion-button float-right padding-start margin-top (click)="deleteSensor()">Sensor Löschen</ion-button>
   </form>
 
 </ion-content>

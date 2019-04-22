@@ -8,6 +8,22 @@
 
 <ion-content class="bg">
 
+  <div class="color-white" *ngIf="!sensorData">
+    <h2 padding-start padding-end>Warum sehe ich die Sensoren nicht?</h2>
+    <h3 padding-start padding-end>1. Empfangsgerät nicht eingerichtet?</h3>
+    <ion-button (click)="redirect('/tabs/network')" float-left padding-start padding-end margin-bottom color="primary">
+      <ion-icon ios="ios-wifi" md="md-wifi"></ion-icon> Hier Verbinden!
+    </ion-button> <br><br><br>
+    <h3 padding-start padding-end>2. Sensoren nicht eingeschaltet?</h3>
+    <h4 padding-start padding-end>Bitte versichere dich, dass du die Sensoren eingeschaltet hast und sich in jedem
+      Sensor
+      eine einsatzbereite 3V Knopfzellenbatterie befindet.</h4>
+
+    <h3 padding-start padding-end>3. Hast du eine aktive Internet verbindung?</h3>
+    <h4 padding-start padding-end>Du musst zwar nicht in deinem Homenetzwerk angemeldet sein, dein Mobilgerät benötigt
+      dennoch eine aktive Internetverbindung.</h4>
+  </div>
+
   <ion-virtual-scroll [items]="sensorData">
     <ion-item (click)="presentModal(i)" class="item" lines="none" *virtualItem="let item; let i = index">
       <ion-avatar class="image" large item-start>
@@ -33,13 +49,19 @@
               </h5>
             </div>
           </ion-row>
-          <ion-icon (click)="presentModal(i)" class="create" ios="ios-create" md="md-create"></ion-icon>
+          <ion-icon class="create" ios="ios-create" md="md-create"></ion-icon>
         </ion-grid>
       </ion-label>
+      <div *ngIf="item.active == false" class="inactive">
+        <ion-icon class="warning-icon" md="md-alert"></ion-icon>
+        <h4>
+          Dieser Sensor ist inaktiv. <br> Erfahre unter "Hilfe" mehr.
+        </h4>
+      </div>
     </ion-item>
   </ion-virtual-scroll>
-  <!-- <div class="add-container">
-    <ion-icon (click)="presentModal()" class="add ion-text-center" ios="ios-add-circle" md="md-add-circle"></ion-icon>
-    <div class="white"></div>
-  </div> -->
+  <div class="refresh">
+    <ion-icon class="refresh-icon" color="primary" (click)="refresh()" float-center ios="ios-refresh"
+      md="md-refresh-circle"></ion-icon>
+  </div>
 </ion-content>

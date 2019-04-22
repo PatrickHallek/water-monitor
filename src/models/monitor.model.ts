@@ -1,8 +1,10 @@
 export interface ISensor {
   image: String;
   sensorName: String;
+  sensorNumber: String;
   timestamp: Date;
   waterLevel: String;
   room: String;
-  duration;
+  duration: Number;
+  active: Boolean;
 }

@@ -3,7 +3,7 @@ var dateFormat = require('dateformat');
 
 exports.getSensorData = (req, res, err) => {
     Sensor.find({
-            user: req.params.id
+            appToken: req.params.id
         })
         .then(data => {
             res.json(data);
@@ -14,33 +14,30 @@ exports.getSensorData = (req, res, err) => {
 
 exports.postSensor = (req, res, err) => {
     var data = res.socket.parser.incoming.body;
-    var user = data.user;
+    var appToken = data.appToken;
     var key = data.soilMoisture.toString().slice(0, 2);
     var sensorNr = data.soilMoisture.toString().slice(2, 5);
-    var soilMoisture = 100 - data.soilMoisture.toString().slice(5, 8);
+    var waterLevel = 100 - data.soilMoisture.toString().slice(5, 8);
 
     var update = {};
-    if (user) update.user = user;
-    if (waterLevel) update.waterLevel = soilMoisture;
+    if (appToken) update.appToken = appToken;
+    if (waterLevel) update.waterLevel = waterLevel;
     if (sensorNr) update.sensorNr = sensorNr;
     update.timestamp = Date.now();
-    update.sensorNumber = "Name";
-    update.room = "Raum";
-    update.duration = 1;
-    update.image = "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1932&q=80";
 
+    console.log(update);
 
-    if (key == 99) {
+    if (key == 99 && sensorNr >= 100) {
         Sensor.findOneAndUpdate({
                 sensorNumber: sensorNr,
-                user: data.user
+                appToken: data.appToken
             }, {
                 $set: update
             }, {
                 upsert: true,
             })
             .then(data => {
-                res.status(201).json({
+                res.status(200).json({
                     message: "Data saved to database!",
                     data: data
                 });
@@ -59,15 +56,16 @@ exports.postUpdateSensor = (req, res, err) => {
     if (req.body.sensorName) update.sensorName = req.body.sensorName;
     if (req.body.duration) update.duration = req.body.duration;
     if (req.body.room) update.room = req.body.room;
-    if (!req.body.user) {
+    if (!req.body.appToken) {
         res.status(201).json({
             message: "No user"
         });
         return;
     };
+    console.log(req.body)
     Sensor.findOneAndUpdate({
-            sensorNumber: req.body.sensorNr,
-            user: req.body.user
+            sensorNumber: req.body.sensorNumber,
+            appToken: req.body.appToken
         }, {
             $set: update
         }, {
@@ -84,7 +82,28 @@ exports.postUpdateSensor = (req, res, err) => {
         });
 }
 
-
+exports.postDeleteSensor = (req, res, err) => {
+    console.log(req.body)
+    if (!req.body.appToken && !req.body.sensorNumber) {
+        res.status(201).json({
+            message: "No user"
+        });
+        return;
+    };
+    Sensor.findOneAndDelete({
+            sensorNumber: req.body.sensorNumber,
+            appToken: req.body.appToken
+        })
+        .then(data => {
+            res.status(201).json({
+                message: "Sensor was deleted",
+                data: data
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 
 

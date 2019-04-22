@@ -3,5 +3,22 @@
   "integrations": {
     "cordova": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "proxies": [
+    {
+      "path":"/",
+      "proxyUrl": "http://wifi.urremote.com/save"
+    },
+    {
+      "proxyUrl": "http://wifi.urremote.com/save"
+    },
+    {
+      "path":"/save",
+      "proxyUrl": "http://wifi.urremote.com"
+    },
+    {
+      "path":"/connection",
+      "proxyUrl": "http://wifi.urremote.com"
+    }
+  ]
 }

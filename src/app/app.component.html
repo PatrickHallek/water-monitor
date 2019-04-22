@@ -1,3 +1,17 @@
 <ion-app>
+  <div *ngIf="message" class="message">
+    <h4 *ngIf="messageState == true">
+      Anmeldung war erfolgreich! <br>
+      <ion-icon class="big-icon-success" name="md-checkmark-circle-outline"> </ion-icon>
+      <br>
+      {{message}}
+    </h4>
+    <h4 *ngIf="messageState == false">
+      Etwas ist schief gelaufen. <br>
+      <ion-icon class="big-icon-danger" name="ios-close-circle-outline"></ion-icon>
+      <br>
+      {{message}}
+    </h4>
+  </div>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

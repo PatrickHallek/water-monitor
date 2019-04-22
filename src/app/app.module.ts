@@ -7,7 +7,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { AppRoutingModule } from "./app-routing.module";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HttpClientJsonpModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from "./app.component";
 import { Hotspot } from "@ionic-native/hotspot/ngx";
@@ -15,6 +15,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 class CameraMock extends Camera {
   getPicture(options) {
@@ -31,6 +32,7 @@ class CameraMock extends Camera {
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
@@ -43,6 +45,7 @@ class CameraMock extends Camera {
     ImagePicker,
     Camera,
     PhotoLibrary,
+    WebView,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

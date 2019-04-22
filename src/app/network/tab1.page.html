@@ -10,8 +10,8 @@
 
   <div *ngIf="!ssid">
     <h2 padding-start padding-end>Wähle dein WLAN aus!</h2>
-
-    <ion-button padding-start padding-end margin-bottom (click)="scanWifi()" color="primary">WLAN Erneut scannen</ion-button>
+    <ion-button padding-start padding-end margin-bottom (click)="scanWifi()" color="primary">WLAN Erneut scannen
+    </ion-button>
     <ion-virtual-scroll margin-top [items]="wifi">
       <ion-item (click)="getSSID(item.SSID)" padding-start padding-end class="item" lines="none"
         *virtualItem="let item; let i = index">
@@ -25,30 +25,48 @@
   <div *ngIf="ssid && spinner != true">
     <ion-item padding>
       <ion-text>
-        <h2>Schalte den Empfänger ein.</h2>
+        <h2>Konfiguration des Empfängers.</h2>
         <h6>
-          Trage das WLAN-Passwort ein und schalte anschließend das Empfangsgerät ein. Falls das Gerät schon an war, 
-          schalte es zunächst aus und im Anschluss wieder ein.
-          Drücke nach dem Anschalten auf "VERBINDEN". Dieser Vorgang kann bis zu mehreren Minuten dauern, schalte während des
-          Vorganges das Gerät und das Smartphone nicht aus.
+          Diesen Vorgang ist <b>einmalig </b> und dient zur Konfiguration des Empfängers. <br>
+          Schalte das Empfangsgerät ein, warte 20 Sekungen und aktuallisiere den Empfängerstatus bis
+          dieser auf "Aktiv!" steht. Verbinde dich nun mit dem vom Empfänger eröffneten WLAN. Gehe dazu in die
+          WLAN-Einstellungen deines Smartphones verbinde dich mit WLAN namens "WaterMonitor". Das Passwort lautet:
+          "admin1234". Gehe anschließend zurück in die App und trage das Passwort deines Home-WLANs ein und drücke auf
+          "VERBINDEN".
         </h6>
       </ion-text>
     </ion-item>
-
     <ion-item padding-start padding-end>
-      <ion-label>WIFI: {{ ssid }}</ion-label>
+      <ion-label>Empfängerstatus: {{ wifi['Finger Weg da']}}
+        <span style="color:#10dc60" *ngIf="checkESPNetwork() === true">Aktiv!</span>
+        <span style="color:#f04141" *ngIf="checkESPNetwork() === false">Nicht eingeschaltet</span>
+      </ion-label>
+      <ion-icon color="primary" *ngIf="checkESPNetwork() === false" (click)="scanWifi()" float-right ios="ios-refresh"
+        md="md-refresh"></ion-icon>
     </ion-item>
 
     <form (ngSubmit)="sendCredentials()">
       <ion-item padding-start padding-end>
-        <ion-label>Name: </ion-label>
+        <ion-label>WLAN-Passwort: </ion-label>
         <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
       </ion-item>
-      <ion-button float-right padding-top padding-bottom padding-end (click)="unsetSSID()" color="primary">Zurück
+      <ion-button float-right padding-bottom padding-end [class.button-disabled]="!password" padding type="submit"
+        color="primary">Verbinden
       </ion-button>
-      <ion-button float-right [class.button-disabled]="!password" padding type="submit" color="primary">Verbinden
+      <ion-button margin-bottom float-right padding-top padding-bottom (click)="unsetSSID()" color="primary">Zurück
       </ion-button>
     </form>
+  </div>
+
+  <div *ngIf="(ssid && spinner && connecting)== true">
+    <ion-item padding>
+      <ion-text>
+        <h2>Schalte die App und den Empfänger nicht aus!</h2>
+        <h6>
+          Bitte habe etwas Geduld, dieser Vorgang kann bis zu 3 Minuten dauern.
+        </h6>
+      </ion-text>
+    </ion-item>
   </div>
 
   <ion-grid *ngIf="spinner == true">

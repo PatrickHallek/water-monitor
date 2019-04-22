@@ -1,10 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { RestService } from "src/service/data-stream.service";
+import { BackendService } from "src/service/backend.service";
 import { Subscription } from "rxjs";
 import { Modal2Component } from "./modal2/modal2.component";
-import { ModalController } from "@ionic/angular";
+import { ModalController, NavController } from "@ionic/angular";
 import { ISensor } from "../../models/monitor.model";
+import { Tab1Page } from '../network/tab1.page';
+import { Router } from '@angular/router';
+import { AnimationService } from 'src/service/animation.service';
 
 @Component({
   selector: "app-tab2",
@@ -14,20 +17,25 @@ import { ISensor } from "../../models/monitor.model";
 export class Tab2Page implements OnInit {
   constructor(
     private http: HttpClient,
-    private restService: RestService,
-    public modalController: ModalController
-  ) {}
+    private restService: BackendService,
+    public animationService: AnimationService,
+    public modalController: ModalController,
+    public navCtrl: NavController,
+    public router: Router,
+  ) { }
   sensors = [];
   barWidth = "90%";
   public sensorDataSub: Subscription;
   public waterLevelSub: Subscription;
+  public messageSub: Subscription;
+  public message: { msg: String, state: Boolean };
   public sensorData: ISensor[];
 
   ngOnInit() {
     this.restService.getSensorData();
-    setInterval(() => {
-      this.restService.getWaterLevel();
-    }, 15500);
+    // setInterval(() => {
+    //   this.restService.getWaterLevel();
+    // }, 100000);
     this.sensorDataSub = this.restService
       .getSensorDataListener()
       .subscribe(sensorData => {
@@ -49,5 +57,13 @@ export class Tab2Page implements OnInit {
       componentProps: { sensor: this.sensorData[i] }
     });
     return await modal.present();
+  }
+
+  redirect(url) {
+    this.router.navigateByUrl(url);
+  }
+
+  refresh() {
+    this.restService.getSensorData();
   }
 }

@@ -18,7 +18,7 @@
 
 
 .bg {
-    --background: rgb(43, 43, 43);
+    --background: rgb(26, 26, 26);
 }
 
 ion-item {
@@ -34,4 +34,41 @@ ion-item {
 ion-virtual-scroll {
     contain: none;
     overflow: visible;
+}
+
+.color-white {
+    color:white;
+}
+
+.message {
+    position: absolute;
+    z-index: 99999;
+    width: 80%;
+    left: 10%;
+    top: 100px;
+    background: rgb(255, 255, 255);
+    box-shadow: 2px 3px 15px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+
+    h4{
+        padding: 5px;
+        text-align: center;
+        color: rgb(61, 61, 61);
+    }
+}
+
+.big-icon-success {
+    height: 200px;
+    width: 200px;
+    color: rgb(16, 150, 16);
+}
+
+.big-icon-danger {
+    height: 200px;
+    width: 200px;
+    color: rgb(214, 39, 39);
 }

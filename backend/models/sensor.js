@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Sensor = new Schema({
-    user: String,
+    appToken: String,
     duration: Number,
     image: String,
     sensorName: String,
