@@ -1,4 +1,4 @@
-# Ionic Mobile Water Monitoring APP
+# Ionic Mobile Water Monitoring App
 
 This is mobile IoT App for monitoring the waterlevel of your plants.
 To make this Ionic App a useful application, you need the water humidity sensors I developed, which send data to an ESP8266 Wifi modul. This module has to be connected to the wifi through the app to send the sensor data to a cloud server account specific. The app then fetches the plant data from the database of the cloud server and displays it.
