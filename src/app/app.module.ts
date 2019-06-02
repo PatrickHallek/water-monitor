@@ -16,6 +16,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 class CameraMock extends Camera {
   getPicture(options) {
@@ -46,6 +48,8 @@ class CameraMock extends Camera {
     Camera,
     PhotoLibrary,
     WebView,
+    BackgroundMode,
+    LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
